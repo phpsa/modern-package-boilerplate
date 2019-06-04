@@ -1,6 +1,6 @@
 {
   "name": "modern-package-boilerplate",
-  "version": "2.3.4",
+  "version": "2.3.4-custom",
   "description": "Powerfull, flexible and easy-to-use boilerplate for creating modern npm packages. Features: rollup, babel, react (optional), flow (optional), jest, enzyme, eslint, travis-ci, coveralls, renovate",
   "keywords": [
     "npm-package",
@@ -20,16 +20,13 @@
     "renovate"
   ],
   "license": "MIT",
-  "author": "Eugene Nikitin",
-  "homepage": "http://github.com/eunikitin/modern-package-boilerplate.git",
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/eunikitin/modern-package-boilerplate.git"
-  },
-  "bugs": {
-    "mail": "eu.nikitin@gmail.com",
-    "url": "http://github.com/eunikitin/modern-package-boilerplate/issues"
-  },
+  "repository": "https://github.com/phpsa/modern-package-boilerplate",
+  "contributors": [
+    {
+      "name": "Craig Smith",
+      "email": "vxdhost@gmail.com"
+    }
+  ],
   "main": "lib/index.js",
   "scripts": {
     "clean": "rimraf ./coverage ./lib",
@@ -38,20 +35,31 @@
     "test": "cross-env NODE_ENV=test jest",
     "test:watch": "cross-env NODE_ENV=test jest --watch",
     "test:cover": "cross-env NODE_ENV=test jest --coverage",
-    "coveralls": "npm run test:cover && cat ./coverage/lcov.info | coveralls",
+    "coveralls": "yarn test:cover && cat ./coverage/lcov.info | coveralls",
     "flow": "flow",
-    "flow-typed": "npm run clean && flow-typed install --overwrite || true",
+    "flow-typed": "yarn clean && flow-typed install --overwrite || true",
     "lint": "eslint src",
-    "prepublish": "npm run clean && npm run test && npm run flow && npm run lint && npm run build"
+	"prepublish": "yarn clean && yarn test && yarn flow && yarn lint && yarn build && yarn storybook:build",
+	"storybook": "start-storybook -c ./.storybook -p 9001",
+	"storybook:build": "build-storybook -c ./.storybook -o ./public"
+
   },
   "peerDependencies": {
-    "react": "^15 || ^16",
-    "react-dom": "^15 || ^16"
+    "react": "^16.8",
+    "react-dom": "^16.8"
   },
   "dependencies": {
     "babel-runtime": "^6.26.0"
   },
   "devDependencies": {
+	"@storybook/addon-actions": "^5.0.11",
+    "@storybook/addon-info": "^5.0.11",
+    "@storybook/addon-jest": "^5.0.11",
+    "@storybook/addon-knobs": "^5.0.11",
+    "@storybook/addon-notes": "^5.0.11",
+    "@storybook/addon-options": "^5.0.11",
+    "@storybook/addon-viewport": "^5.0.11",
+    "@storybook/react": "^5.0.11",
     "babel-core": "6.26.0",
     "babel-eslint": "8.2.3",
     "babel-plugin-module-resolver": "3.1.1",
@@ -73,8 +81,8 @@
     "flow-typed": "2.4.0",
     "fs-file-tree": "1.0.6",
     "jest": "22.4.3",
-    "react": "16.3.2",
-    "react-dom": "16.3.2",
+    "react": "16.8.6",
+    "react-dom": "16.8.6",
     "rimraf": "2.6.2",
     "rollup": "0.58.1",
     "rollup-plugin-babel": "3.0.3",
